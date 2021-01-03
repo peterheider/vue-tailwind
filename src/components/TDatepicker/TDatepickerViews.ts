@@ -96,6 +96,14 @@ const TDatepickerViews = Vue.extend({
       type: Object,
       required: true,
     },
+    inputHandlers: {
+      type: Object,
+      default: () => ({
+        [CalendarView.Year]: 'viewInputActiveDateHandler',
+        [CalendarView.Month]: 'viewInputActiveDateHandler',
+        [CalendarView.Day]: 'inputHandler',
+      }),
+    },
   },
 
   data() {
@@ -151,6 +159,7 @@ const TDatepickerViews = Vue.extend({
             maxDate: this.maxDate,
             range: this.range,
             showDaysForOtherMonth: this.showDaysForOtherMonth,
+            inputHandlers: this.inputHandlers,
             locale: this.locale,
           },
           scopedSlots: this.$scopedSlots,

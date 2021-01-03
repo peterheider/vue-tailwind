@@ -187,7 +187,6 @@ const TDatepickerNavigator = Vue.extend({
         }
       } while (day <= lastDay && !validDate);
 
-
       if (!validDate) {
         day = prevMonth.getDate();
         do {

@@ -114,7 +114,6 @@ const TTable = Component.extend({
       return !this.hideHeader;
     },
 
-
   },
 
   mounted() {

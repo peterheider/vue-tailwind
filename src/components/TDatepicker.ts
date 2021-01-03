@@ -97,6 +97,10 @@ const TDatepicker = HtmlInput.extend({
         return [CalendarView.Day, CalendarView.Month, CalendarView.Year].includes(value);
       },
     },
+    viewLocked: {
+      type: Boolean,
+      default: false,
+    },
     yearsPerView: {
       type: Number,
       default: 12,
@@ -136,6 +140,14 @@ const TDatepicker = HtmlInput.extend({
     clearable: {
       type: Boolean,
       default: true,
+    },
+    inputHandlers: {
+      type: Object,
+      default: () => ({
+        [CalendarView.Year]: 'viewInputActiveDateHandler',
+        [CalendarView.Month]: 'viewInputActiveDateHandler',
+        [CalendarView.Day]: 'inputHandler',
+      }),
     },
     classes: {
       type: Object,
@@ -212,6 +224,9 @@ const TDatepicker = HtmlInput.extend({
         year: 'text-sm rounded w-full h-12 mx-auto hover:bg-blue-100',
         selectedYear: 'text-sm rounded w-full h-12 mx-auto bg-blue-500 text-white',
         activeYear: 'text-sm rounded w-full h-12 mx-auto bg-blue-100',
+        inRangeYear: 'text-sm w-full h-12 mx-auto bg-blue-500 text-white',
+        inRangeFirstYear: 'text-sm rounded-l-full w-full h-12 mx-auto bg-blue-500 text-white',
+        inRangeLastYear: 'text-sm rounded-r-full w-full h-12 mx-auto bg-blue-500 text-white',
       }),
     },
     fixedClasses: {
@@ -554,10 +569,16 @@ const TDatepicker = HtmlInput.extend({
       this.focus();
     },
     setView(newView: CalendarView): void {
+      if (this.viewLocked && this.initialView !== newView) {
+        return;
+      }
       this.currentView = newView;
       this.focus();
     },
     resetView(): void {
+      if (this.viewLocked) {
+        return;
+      }
       if (this.currentView === CalendarView.Month) {
         this.setView(CalendarView.Day);
       } else if (this.currentView === CalendarView.Year) {
@@ -649,6 +670,7 @@ const TDatepicker = HtmlInput.extend({
           maxDate: this.maxDate,
           range: this.range,
           showDaysForOtherMonth: this.showDaysForOtherMonth,
+          inputHandlers: this.inputHandlers,
         },
         scopedSlots: this.$scopedSlots,
         on: {

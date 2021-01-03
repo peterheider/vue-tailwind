@@ -64,6 +64,19 @@
           />
         </t-input-group>
 
+        <t-input-group label="TYearpicker">
+          <t-datepicker
+            user-format="Y"
+            date-format="Y"
+            :range="true"
+            initial-view="year"
+            :view-locked="true"
+            :input-handlers="{'year': 'inputHandler'}"
+            placeholder="Pick a date"
+            :value="['2016', '2019']"
+          />
+        </t-input-group>
+
         <t-input-group label="TCheckboxGroup">
           <t-checkbox-group
             name="checkbox-group"

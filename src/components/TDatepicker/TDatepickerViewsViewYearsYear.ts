@@ -1,5 +1,6 @@
 import Vue, { CreateElement, VNode } from 'vue';
 import CssClass from '../../types/CssClass';
+import { addDays, dateIsOutOfRange, isSameYear } from '../../utils/dates';
 
 const TDatepickerViewsViewYearsYear = Vue.extend({
   name: 'TDatepickerViewsViewYearsYear',
@@ -28,6 +29,10 @@ const TDatepickerViewsViewYearsYear = Vue.extend({
     formatNative: {
       type: Function,
       required: true,
+    },
+    range: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -60,6 +65,31 @@ const TDatepickerViewsViewYearsYear = Vue.extend({
     yearFormatted(): string {
       return this.formatNative(this.getYear(), 'Y');
     },
+    isInRange(): boolean {
+      if (!this.range || !Array.isArray(this.value)) {
+        return false;
+      }
+      const [from, to] = this.value as Date[];
+      if (from && to) {
+        return !dateIsOutOfRange(this.getYear(), addDays(from, 1), addDays(to, -1));
+      }
+
+      return false;
+    },
+    isFirstYearOfRange(): boolean {
+      if (!this.range || !Array.isArray(this.value)) {
+        return false;
+      }
+      const [from] = this.value as Date[];
+      return from && isSameYear(from, this.getYear());
+    },
+    isLastYearOfRange(): boolean {
+      if (!this.range || !Array.isArray(this.value)) {
+        return false;
+      }
+      const [, to] = this.value as Date[];
+      return to && isSameYear(to, this.getYear());
+    },
   },
 
   watch: {
@@ -70,6 +100,18 @@ const TDatepickerViewsViewYearsYear = Vue.extend({
 
   methods: {
     getClass(): CssClass {
+      if (this.isFirstYearOfRange) {
+        return this.getElementCssClass('inRangeFirstYear');
+      }
+
+      if (this.isLastYearOfRange) {
+        return this.getElementCssClass('inRangeLastYear');
+      }
+
+      if (this.isInRange) {
+        return this.getElementCssClass('inRangeYear');
+      }
+
       if (this.isSelected) {
         return this.getElementCssClass('selectedYear');
       }

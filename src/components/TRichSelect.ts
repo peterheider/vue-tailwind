@@ -385,7 +385,6 @@ const TRichSelect = InputWithOptions.extend({
           this.filteredOptions = [];
         }
 
-
         this.searching = false;
         this.delayTimeout = undefined;
       }, this.delay);
@@ -654,6 +653,5 @@ const TRichSelect = InputWithOptions.extend({
     },
   },
 });
-
 
 export default TRichSelect;

@@ -1,4 +1,3 @@
-
 import Vue, { CreateElement, VNode } from 'vue';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import TDialogOverlayWrapper from './TDialogOverlayWrapper';

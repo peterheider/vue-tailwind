@@ -215,7 +215,6 @@ const TCheckbox = HtmlInput.extend({
       });
     },
 
-
     wrapperSpaceHandler(e: KeyboardEvent) {
       e.preventDefault();
       this.click();

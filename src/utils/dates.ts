@@ -37,7 +37,6 @@ export interface FormatterArgs {
   // isMobile?: boolean;
 }
 
-
 export const formatDate = (dateObj: Date | null, format: string, customLocale?: Locale): string => {
   if (!dateObj) {
     return '';
@@ -202,6 +201,11 @@ export function isSameMonth(date1?: Date, date2?: Date): boolean {
         && date1.getMonth() === date2.getMonth();
 }
 
+export function isSameYear(date1?: Date, date2?: Date): boolean {
+  return (!!date1)
+    && (!!date2)
+      && date1.getFullYear() === date2.getFullYear();
+}
 /**
  * it two dates are in the same day
  */

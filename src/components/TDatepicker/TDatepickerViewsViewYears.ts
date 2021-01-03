@@ -31,6 +31,10 @@ const TDatepickerViewsViewYears = Vue.extend({
       type: Function,
       required: true,
     },
+    range: {
+      type: Boolean,
+      required: true,
+    },
   },
 
   data() {
@@ -53,7 +57,6 @@ const TDatepickerViewsViewYears = Vue.extend({
       this.localActiveDate = new Date(activeDate.valueOf());
     },
   },
-
 
   methods: {
     getYear(year: number) {
@@ -87,6 +90,7 @@ const TDatepickerViewsViewYears = Vue.extend({
             getElementCssClass: this.getElementCssClass,
             showActiveDate: this.showActiveDate,
             formatNative: this.formatNative,
+            range: this.range,
           },
           scopedSlots: this.$scopedSlots,
           on: {

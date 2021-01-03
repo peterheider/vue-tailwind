@@ -97,6 +97,14 @@ const TDatepickerViewsView = Vue.extend({
       type: Boolean,
       required: true,
     },
+    inputHandlers: {
+      type: Object,
+      default: () => ({
+        [CalendarView.Year]: 'viewInputActiveDateHandler',
+        [CalendarView.Month]: 'viewInputActiveDateHandler',
+        [CalendarView.Day]: 'inputHandler',
+      }),
+    },
     locale: {
       type: Object,
       required: true,
@@ -210,7 +218,7 @@ const TDatepickerViewsView = Vue.extend({
             },
             scopedSlots: this.$scopedSlots,
             on: {
-              input: this.inputHandler,
+              input: (this as never)[this.inputHandlers[CalendarView.Day]],
             },
           },
         ),
@@ -230,7 +238,7 @@ const TDatepickerViewsView = Vue.extend({
             },
             scopedSlots: this.$scopedSlots,
             on: {
-              input: this.viewInputActiveDateHandler,
+              input: (this as never)[this.inputHandlers[CalendarView.Month]],
             },
           },
         ),
@@ -248,10 +256,11 @@ const TDatepickerViewsView = Vue.extend({
               yearsPerView: this.yearsPerView,
               showActiveDate: this.showActiveDate,
               formatNative: this.formatNative,
+              range: this.range,
             },
             scopedSlots: this.$scopedSlots,
             on: {
-              input: this.viewInputActiveDateHandler,
+              input: (this as never)[this.inputHandlers[CalendarView.Year]],
             },
           },
         ),

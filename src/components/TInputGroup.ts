@@ -55,7 +55,6 @@ const TInputGroup = Component.extend({
     return renderFun(createElement);
   },
 
-
   computed: {
     /**
      * Only render the elements that has a prop or a slot (always the default prop)
