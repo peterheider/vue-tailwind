@@ -4,7 +4,7 @@
   "description": "Vue components styled with TailwindCss with configurable classes",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alfonsobries/vue-tailwind"
+    "url": "git+https://github.com/peterheider/vue-tailwind"
   },
   "keywords": [
     "tailwindcss",
@@ -18,11 +18,11 @@
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "rollup --config build/rollup.config.js",
+    "build": "node -max_old_space_size=4096 node_modules/.bin/rollup --config build/rollup.config.js",
     "test": "vue-cli-service test:unit",
     "test:watch": "vue-cli-service test:unit --watch",
     "lint": "vue-cli-service lint",
-    "release": "release-it"
+    "release": "release-it --no-npm.publish"
   },
   "dependencies": {
     "body-scroll-lock": "^3.1.5",
@@ -85,5 +85,10 @@
     "dist/*"
   ],
   "typings": "./dist/index.d.ts",
-  "main": "dist/vue-tailwind.js"
+  "main": "dist/vue-tailwind.js",
+  "release-it": {
+    "github": {
+      "release": true
+    }
+  }
 }
